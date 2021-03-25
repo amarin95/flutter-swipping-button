@@ -1,8 +1,7 @@
 name: flutter_swipping_button
-description: A new Flutter package project.
+description: Flutter swipping animated button with delay support to initial state.
 version: 0.0.1
-author:
-homepage:
+homepage: https://github.com/amarin95/flutter-swipping-button
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
