@@ -45,7 +45,7 @@ class _SwipableButtonState extends State<SwipableButton>
   @override
   void initState() {
     super.initState();
-
+    //TODO: make duration variable
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300))
       ..addListener(() {
@@ -71,6 +71,7 @@ class _SwipableButtonState extends State<SwipableButton>
       },
       onPanUpdate: (details) {
         final widgetSize = context.size.width;
+        //TODO: make swipable length variable
         final minimumXToStartSwiping = widgetSize * 0.25;
         if (_dxStartPosition <= minimumXToStartSwiping) {
           setState(() {
@@ -85,6 +86,7 @@ class _SwipableButtonState extends State<SwipableButton>
         final delta = _dxEndsPosition - _dxStartPosition;
         final widgetSize = context.size.width;
         final deltaNeededToBeSwiped = widgetSize * widget.swipePercentageNeeded;
+        //TODO: make animation more customizable
         if (delta > deltaNeededToBeSwiped) {
           _controller.animateTo(0.0,
               duration: Duration(milliseconds: 300),
