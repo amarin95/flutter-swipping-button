@@ -4,6 +4,8 @@ A simple swipping button for Flutter with rollback animation with a desired dela
 
 [![Pub](https://img.shields.io/pub/v/flutter_slidable.svg)](https://pub.dev/packages/flutter_swipping_button)
 
+![Overview](https://github.com/amarin95/flutter-swipping-button/blob/main/doc/screenshots/swipable-example.gif)
+
 ## Getting Started
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
