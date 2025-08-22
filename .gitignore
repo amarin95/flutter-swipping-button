@@ -39,6 +39,7 @@ build/
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/app/.cxx/ */
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -74,3 +75,4 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 pubspec.lock
+example/android/app/.cxx/

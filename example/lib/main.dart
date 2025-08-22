@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swipping_button/flutter_swipping_button.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,25 +15,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Swipping Button Demo'),
+      home: const MyHomePage(title: 'Flutter Swipping Button Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({required this.title});
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _swipeButtonBackgroundWidget;
+  Widget? _swipeButtonBackgroundWidget;
 
-  _onSwipeCallback() {
+  void _onSwipeCallback() {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("SWIPPED")));
+        .showSnackBar(const SnackBar(content: Text("SWIPED")));
   }
 
   @override
@@ -51,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Stack(
               children: <Widget>[
                 Container(
@@ -63,35 +65,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SwipableButton(
                   height: 80.0,
-                  delay: Duration(seconds: 3),
+                  delay: const Duration(seconds: 3),
                   returnToInitialPosition: true,
                   child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      child: Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Swipe to Open",
-                                overflow: TextOverflow.fade,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.035),
-                              ),
-                              Container(
-                                  child: Icon(Icons.navigate_next,
-                                      color: Colors.white)),
-                            ]),
-                      ),
-                    ),
                     height: 80.0,
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(4.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Swipe to Open",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
+                              ),
+                            ),
+                          ),
+                          const Icon(Icons.navigate_next, color: Colors.white),
+                        ],
+                      ),
+                    ),
                   ),
                   onSwipeCallback: _onSwipeCallback,
                 ),

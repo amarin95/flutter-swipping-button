@@ -3,8 +3,6 @@ library flutter_swipping_button;
 import 'package:flutter/material.dart';
 
 class SwipableButton extends StatefulWidget {
-  @override
-  _SwipableButtonState createState() => _SwipableButtonState();
   final Widget child;
 
   /// The Height of the widget that will be drawn, required.
@@ -18,26 +16,31 @@ class SwipableButton extends StatefulWidget {
 
   final bool returnToInitialPosition;
 
-  final Duration delay;
+  final Duration? delay;
 
-  SwipableButton(
-      {Key key,
-      @required this.child,
-      @required this.height,
-      @required this.onSwipeCallback,
-      this.returnToInitialPosition = false,
-      this.delay,
-      this.swipePercentageNeeded = 0.75})
-      : assert(child != null &&
-            onSwipeCallback != null &&
-            swipePercentageNeeded <= 1.0 &&
-            (returnToInitialPosition && delay != null)),
-        super(key: key);
+  const SwipableButton({
+    required this.child,
+    required this.height,
+    required this.onSwipeCallback,
+    this.returnToInitialPosition = false,
+    this.delay,
+    this.swipePercentageNeeded = 0.75,
+  })  : assert(
+          swipePercentageNeeded <= 1.0,
+          'Swipe percentage must be less than or equal to 1.0',
+        ),
+        assert(
+          !returnToInitialPosition || delay != null,
+          'Delay must be provided when returnToInitialPosition is true',
+        );
+
+  @override
+  State<SwipableButton> createState() => _SwipableButtonState();
 }
 
 class _SwipableButtonState extends State<SwipableButton>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late final AnimationController _controller;
 
   double _dxStartPosition = 0.0;
   double _dxEndsPosition = 0.0;
@@ -45,10 +48,10 @@ class _SwipableButtonState extends State<SwipableButton>
   @override
   void initState() {
     super.initState();
-    //TODO: make duration variable
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300))
-      ..addListener(() {
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    )..addListener(() {
         setState(() {});
       });
 
@@ -70,44 +73,48 @@ class _SwipableButtonState extends State<SwipableButton>
         });
       },
       onPanUpdate: (details) {
-        final widgetSize = context.size.width;
-        //TODO: make swipable length variable
+        final widgetSize = context.size?.width ?? 0;
         final minimumXToStartSwiping = widgetSize * 0.25;
         if (_dxStartPosition <= minimumXToStartSwiping) {
           setState(() {
             _dxEndsPosition = details.localPosition.dx;
           });
 
-          final widgetSize = context.size.width;
           _controller.value = 1 - ((details.localPosition.dx) / widgetSize);
         }
       },
       onPanEnd: (details) async {
         final delta = _dxEndsPosition - _dxStartPosition;
-        final widgetSize = context.size.width;
+        final widgetSize = context.size?.width ?? 0;
         final deltaNeededToBeSwiped = widgetSize * widget.swipePercentageNeeded;
-        //TODO: make animation more customizable
+
         if (delta > deltaNeededToBeSwiped) {
-          _controller.animateTo(0.0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.fastOutSlowIn);
+          await _controller.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
+          );
           widget.onSwipeCallback();
-          if (widget.returnToInitialPosition) {
+
+          if (widget.returnToInitialPosition && widget.delay != null) {
             Future.delayed(
-                widget.delay,
-                () => {
-                      _controller.animateTo(1.0,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.fastOutSlowIn)
-                    });
+              widget.delay!,
+              () => _controller.animateTo(
+                1.0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.fastOutSlowIn,
+              ),
+            );
           }
         } else {
-          _controller.animateTo(1.0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.fastOutSlowIn);
+          await _controller.animateTo(
+            1.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
+          );
         }
       },
-      child: Container(
+      child: SizedBox(
         height: widget.height,
         child: Align(
           alignment: Alignment.centerRight,
