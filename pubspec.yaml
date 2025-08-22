@@ -1,11 +1,11 @@
 name: flutter_swipping_button
 description: Flutter swipping animated button with delay support to initial state.
-version: 0.0.3
+version: 1.0.0
 homepage: https://github.com/amarin95/flutter-swipping-button
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: '>=3.4.4 <4.0.0'
+  flutter: ">=3.17.0"
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
-flutter:
+
 
   # To add assets to your package, add an assets section, like this:
   # assets:
