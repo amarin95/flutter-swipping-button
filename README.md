@@ -1,5 +1,7 @@
 # flutter_swipping_button
 
+![Swipping Button Example](doc/screenshots/swipable-example.gif)
+
 A simple swipping button for Flutter with rollback animation with a desired delay.
 
 [![Pub](https://img.shields.io/pub/v/flutter_slidable.svg)](https://pub.dev/packages/flutter_swipping_button)
@@ -11,7 +13,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  flutter_swipping_button: ^0.0.2
+  flutter_swipping_button: ^1.0.0
 ```
 
 In your library add the following import:
